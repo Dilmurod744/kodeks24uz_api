@@ -1,12 +1,12 @@
 admin:
-	./manage.py createsuperuser
+	python ./manage.py createsuperuser
 
 migrate:
-	./manage.py makemigrations
-	./manage.py migrate
+	python ./manage.py makemigrations
+	python ./manage.py migrate
 
-run:
-	./manage.py runnserver
+runserver:
+	python ./manage.py runnserver
 
 requirements:
 	pip freeze >requirements.txt
