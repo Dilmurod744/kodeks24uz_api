@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 	# Installed Apps
 	'drf_yasg',
+	'import_export',
 	'rest_framework',
 ]
 
@@ -78,6 +79,7 @@ WSGI_APPLICATION = 'root.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+AUTH_USER_MODEL = 'accounts.User'
 
 DATABASES = {
 	'default': {
