@@ -5,8 +5,8 @@ migrate:
 	python ./manage.py makemigrations
 	python ./manage.py migrate
 
-runserver:
-	python ./manage.py runnserver
+run:
+	python ./manage.py runserver
 
 requirements:
 	pip freeze >requirements.txt
