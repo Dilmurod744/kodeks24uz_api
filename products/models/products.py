@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
-from orders.models import shared
+from products.models import shared
 
 
 class Category(shared.SlugModel, shared.BaseModel):
