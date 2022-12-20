@@ -2,7 +2,7 @@ from django.db import models
 
 from accounts.models import User
 from orders.models.shared import BaseModel
-from orders.models.products import Book
+from products.models.products import Book
 
 
 class Cart(BaseModel):

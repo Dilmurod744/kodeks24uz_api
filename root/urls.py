@@ -21,7 +21,7 @@ schema_view = views.get_schema_view(
 urlpatterns = [
 	path('admin/', admin.site.urls),
 
-	re_path(r'^', include('accounts.urls')),
+	re_path(r'^accounts/$', include('accounts.urls')),
 	re_path(r'^', include('orders.urls')),
 	re_path(r'^', include('products.urls')),
 

@@ -39,12 +39,14 @@ INSTALLED_APPS = [
 
 	# System Apps
 	'accounts',
-	'orders',
+	# 'orders',
 
 	# Installed Apps
 	'drf_yasg',
 	'import_export',
 	'rest_framework',
+	'rest_framework.authtoken',
+	'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +135,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django Rest Framework
 REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES': [
+		'rest_framework.authentication.BasicAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+		'rest_framework_simplejwt.authentication.JWTAuthentication',
+	],
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 	'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'],
 	'PAGE_SIZE': 10

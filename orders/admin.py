@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
 from orders.models.orders import Order
-from orders.models.products import Book
+from products.models.products import Book
 
 
 # Register your models here.
