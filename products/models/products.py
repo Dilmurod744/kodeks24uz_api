@@ -8,20 +8,6 @@ from products.models import shared
 
 
 class Category(shared.SlugModel, shared.BaseModel):
-	def _get_unique_slug(self):
-		slug = slugify(self.name)
-		unique_slug = slug
-		num = 1
-		while Category.objects.filter(slug=unique_slug).exists():
-			unique_slug = '{}-{}'.format(slug, num)
-			num += 1
-		return unique_slug
-
-	def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-		self.slug = self._get_unique_slug()
-		if force_update is True:
-			self.name = slugify(self.name)
-		super().save(force_insert=False, force_update=False, using=None, update_fields=None)
 
 	def __str__(self):
 		return f'{self.name}'
@@ -36,17 +22,27 @@ class Book(shared.SlugModel, shared.BaseModel):
 		ENG = 'eng'
 
 	class Format(models.TextChoices):
-		format_1 = '60х84 1/16'
-		format_2 = '60×90 1/16'
-		format_3 = '70×100 1/16'
-		format_4 = '70×90 1/32'
-		format_5 = '84х108 1/32'
+		format_1 = '60x84 1/32'
+		format_2 = '60x90 1/32'
+		format_3 = '70x90 1/32'
+		format_4 = '70x100 1/32'
+		format_5 = '70x108 1/32'
+		format_6 = '75x90 1/32'
+		format_7 = '84x108 1/32'
+
+	# format_1 = '60x84 1/16'
+	# format_2 = '60x90 1/16'
+	# format_3 = '70x90 1/16'
+	# format_4 = '70x100 1/16'
+	# format_5 = '70x108 1/16'
+	# format_6 = '75x90 1/16'
+	# format_7 = '84x108 1/16'
 
 	class Cover(models.TextChoices):
 		HARD = 'hard'
 		SOFT = 'soft'
 
-	image = models.ImageField(upload_to='products/images/')
+	image = models.ImageField(upload_to=f'products/images/')
 	price = models.DecimalField(max_digits=10, decimal_places=2)
 	available = models.BooleanField(default=False)
 	quantity = models.PositiveIntegerField(default=1)
@@ -59,21 +55,6 @@ class Book(shared.SlugModel, shared.BaseModel):
 	ISBN = models.CharField(max_length=13, unique=True)
 	cover = models.CharField(max_length=15, choices=Cover.choices, default=Cover.HARD)
 	info = models.JSONField(encoder=JSONEncoder, decoder=JSONDecoder)
-
-	def _get_unique_slug(self):
-		slug = slugify(self.name)
-		unique_slug = slug
-		num = 1
-		while Book.objects.filter(slug=unique_slug).exists():
-			unique_slug = '{}-{}'.format(slug, num)
-			num += 1
-		return unique_slug
-
-	def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-		self.slug = self._get_unique_slug()
-		if force_update is True:
-			self.name = slugify(self.name)
-		super().save(force_insert=False, force_update=False, using=None, update_fields=None)
 
 	class Meta:
 		verbose_name = _("book")

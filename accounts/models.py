@@ -34,6 +34,7 @@ class UserManager(BaseUserManager):
 		extra_fields.setdefault('is_staff', True)
 		extra_fields.setdefault('is_superuser', True)
 		extra_fields.setdefault('is_active', True)
+		extra_fields.setdefault('type', User.Type.ADMIN)
 
 		if not username:
 			raise ValueError(_('The Username must be set'))
@@ -65,7 +66,7 @@ class User(AbstractUser):
 		EMPLOYEE = 'employee'
 		USER = 'user'
 
-	phone = models.CharField(max_length=13)
+	phone = models.CharField(max_length=13, unique=True)
 	type = models.CharField(max_length=20, choices=Type.choices, default=Type.USER)
 
 	objects = UserManager()

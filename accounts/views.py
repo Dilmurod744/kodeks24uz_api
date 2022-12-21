@@ -6,7 +6,7 @@ from accounts.models import User
 from accounts.serializers import TokenSerializer, RegisterSerializer
 
 
-class TokenView(TokenObtainPairView):
+class LoginView(TokenObtainPairView):
 	permission_classes = (AllowAny,)
 	serializer_class = TokenSerializer
 

@@ -1,8 +1,7 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from accounts.models import User
 
@@ -24,12 +23,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 		validators=[UniqueValidator(queryset=User.objects.all())]
 	)
 
+	phone = serializers.CharField(max_length=13, required=True)
 	password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
 	password2 = serializers.CharField(write_only=True, required=True)
 
 	class Meta:
 		model = User
-		fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+		fields = ('username', 'email', 'phone', 'password', 'password2', 'first_name', 'last_name')
 		extra_kwargs = {
 			'first_name': {'required': True},
 			'last_name': {'required': True}
@@ -45,6 +45,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 		user = User.objects.create(
 			username=validated_data['username'],
 			email=validated_data['email'],
+			phone=validated_data['phone'],
 			first_name=validated_data['first_name'],
 			last_name=validated_data['last_name']
 		)
