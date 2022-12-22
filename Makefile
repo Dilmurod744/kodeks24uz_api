@@ -8,5 +8,5 @@ migrate:
 run:
 	python ./manage.py runserver
 
-requirements:
+freeze:
 	pip freeze >requirements.txt

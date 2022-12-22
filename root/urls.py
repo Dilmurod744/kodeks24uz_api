@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
 from drf_yasg import openapi, views
-from rest_framework import permissions
+from rest_framework import permissions, routers
 
 schema_view = views.get_schema_view(
 	openapi.Info(
@@ -18,9 +18,13 @@ schema_view = views.get_schema_view(
 	permission_classes=[permissions.AllowAny],
 )
 
+router = routers.DefaultRouter()
+
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('api-auth/', include('rest_framework.urls')),
+
+	path('', include(router.urls)),
 
 	path('accounts/', include('accounts.urls')),
 	# re_path(r'^', include('orders.urls')),

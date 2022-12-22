@@ -1,13 +1,15 @@
 from json import JSONEncoder, JSONDecoder
 
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from products.models import shared
 
 
 class Category(shared.SlugModel, shared.BaseModel):
+
+	def get_absolute_url(self):
+		return reverse('shop:product_list_by_category', args=[self.slug])
 
 	def __str__(self):
 		return f'{self.name}'
@@ -42,7 +44,7 @@ class Book(shared.SlugModel, shared.BaseModel):
 		HARD = 'hard'
 		SOFT = 'soft'
 
-	image = models.ImageField(upload_to=f'products/images/')
+	image = models.ImageField(max_length=150, upload_to=f'products/images/')
 	price = models.DecimalField(max_digits=10, decimal_places=2)
 	available = models.BooleanField(default=False)
 	quantity = models.PositiveIntegerField(default=1)
@@ -59,3 +61,6 @@ class Book(shared.SlugModel, shared.BaseModel):
 	class Meta:
 		verbose_name = _("book")
 		verbose_name_plural = _("books")
+
+	def get_absolute_url(self):
+		return reverse('shop:product_detail', args=[self.id, self.slug])

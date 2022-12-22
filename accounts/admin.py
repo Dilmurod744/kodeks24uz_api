@@ -7,4 +7,4 @@ from accounts.models import User
 # Register your models here.
 @admin.register(User)
 class User(ImportExportModelAdmin):
-	pass
+	list_display = ('first_name', 'last_name', 'phone')
