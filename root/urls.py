@@ -26,9 +26,9 @@ urlpatterns = [
 
 	path('', include(router.urls)),
 
-	path('accounts/', include('accounts.urls')),
-	# re_path(r'^', include('orders.urls')),
-	# re_path(r'^', include('products.urls')),
+	re_path(r'^accounts/', include('accounts.urls')),
+	# re_path(r'^orders/', include('orders.urls')),
+	path('', include('products.urls')),
 
 	re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 	re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

@@ -10,13 +10,14 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class SlugBaseModel(models.Model):
+class SlugModel(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(f'{self.name} {self.id}')
+        return super().save(self)
 
     class Meta:
         abstract = True

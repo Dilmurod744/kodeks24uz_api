@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class UserManager(BaseUserManager):
+class AccountManager(BaseUserManager):
 	def create_user(self, username, email, phone, password, **extra_fields):
 		user = self.validate(username, email, phone, password, **extra_fields)
 		return user
@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
 		extra_fields.setdefault("is_staff", True)
 		extra_fields.setdefault("is_superuser", True)
 		extra_fields.setdefault("is_active", True)
-		extra_fields.setdefault("type", User.Type.ADMIN)
+		extra_fields.setdefault("type", Account.Type.ADMIN)
 
 		user = self.validate(username, email, phone, password, **extra_fields)
 		return user
@@ -42,22 +42,25 @@ class UserManager(BaseUserManager):
 		return user
 
 
-class User(AbstractUser):
+class Account(AbstractUser):
 	class Type(models.TextChoices):
 		ADMIN = 'admin'
 		CEO = 'ceo'
 		EMPLOYEE = 'employee'
 		USER = 'user'
 
+	# email = models.CharField(max_length=150, unique=True)
 	phone = models.CharField(max_length=13, unique=True)
 	type = models.CharField(max_length=20, choices=Type.choices, default=Type.USER)
 
-	objects = UserManager()
+	objects = AccountManager()
 
 	REQUIRED_FIELDS = ['email', 'phone', 'first_name', 'last_name']
 
-	class Meta:
-		ordering = ('last_name', 'first_name')
+	class Meta(AbstractUser.Meta):
+		verbose_name = _("account")
+		verbose_name_plural = _("accounts")
+		ordering = ('first_name', 'last_name')
 		swappable = 'AUTH_USER_MODEL'
 
 	def __str__(self):

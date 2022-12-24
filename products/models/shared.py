@@ -12,7 +12,7 @@ class BaseModel(models.Model):
 
 class SlugModel(models.Model):
 	name = models.CharField(max_length=150)
-	slug = models.SlugField(unique=True)
+	slug = models.SlugField(unique=True, db_index=True)
 
 	def save(self, *args, **kwargs):
 		if not self.slug:

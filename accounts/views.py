@@ -1,30 +1,34 @@
-from rest_framework import generics, permissions, response, status
-from rest_framework.views import APIView
-from rest_framework_simplejwt import tokens, views
+from rest_framework import generics, permissions, viewsets
+from rest_framework_simplejwt import views
 
 from accounts import models, serializers
+from accounts.serializers import AccountSerializer
+
+
+class AccountViewSet(viewsets.ModelViewSet):
+	queryset = models.Account.objects.all().order_by('-date_joined')
+	serializer_class = AccountSerializer
+	permission_classes = [permissions.IsAdminUser]
 
 
 class LoginView(views.TokenObtainPairView):
 	permission_classes = (permissions.AllowAny,)
-	serializer_class = serializers.TokenSerializer
+	serializer_class = serializers.LoginSerializer
 
 
 class RegisterView(generics.CreateAPIView):
-	queryset = models.User.objects.all()
+	queryset = models.Account.objects.all()
 	permission_classes = (permissions.AllowAny,)
 	serializer_class = serializers.RegisterSerializer
 
 
-class LogoutView(APIView):
+class ChangePasswordView(generics.UpdateAPIView):
+	queryset = models.Account.objects.all()
 	permission_classes = (permissions.IsAuthenticated,)
+	serializer_class = serializers.ChangePasswordSerializer
 
-	def post(self, request):
-		try:
-			refresh_token = request.data["refresh_token"]
-			token = tokens.RefreshToken(refresh_token)
-			token.blacklist()
 
-			return response.Response(status=status.HTTP_205_RESET_CONTENT)
-		except Exception:
-			return response.Response(status=status.HTTP_400_BAD_REQUEST)
+class UpdateProfileView(generics.UpdateAPIView):
+	queryset = models.Account.objects.all()
+	permission_classes = (permissions.IsAuthenticated,)
+	serializer_class = serializers.UpdateUserSerializer

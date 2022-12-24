@@ -42,13 +42,12 @@ INSTALLED_APPS = [
 	# System Apps
 	'accounts',
 	# 'orders',
-	# 'products'
+	'products',
 
 	# Installed Apps
 	'drf_yasg',
 	'import_export',
 	'rest_framework',
-	'rest_framework.authtoken',
 	'rest_framework_simplejwt',
 ]
 
@@ -84,7 +83,7 @@ WSGI_APPLICATION = 'root.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.Account'
 
 DATABASES = {
 	'default': {
@@ -156,7 +155,6 @@ SWAGGER_SETTINGS = {
 			'name': 'Authorization'
 		}
 	},
-
 }
 
 SIMPLE_JWT = {
